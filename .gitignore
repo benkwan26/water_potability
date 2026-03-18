@@ -1,0 +1,5 @@
+/.dvc
+/.venv
+/.vscode
+/.dvcignore
+**/.DS_Store
