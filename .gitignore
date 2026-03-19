@@ -3,3 +3,5 @@
 /.vscode
 /.dvcignore
 **/.DS_Store
+/model.pkl
+/metrics.json
