@@ -6,8 +6,8 @@ from sklearn.ensemble import RandomForestClassifier
 
 train_df = pd.read_csv("./data/processed/train_processed.csv")
 
-X_train = train_df.iloc[:, 0: -1].values
-y_train = train_df.iloc[:, -1].values
+X_train = train_df.drop(columns=["Potability"])
+y_train = train_df['Potability']
 
 clf = RandomForestClassifier()
 clf.fit(X_train, y_train)
