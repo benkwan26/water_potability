@@ -1,7 +1,8 @@
+**/.DS_Store
 /.dvc
+/.dvcignore
 /.venv
 /.vscode
-/.dvcignore
-**/.DS_Store
+/data
 /model.pkl
 /metrics.json
