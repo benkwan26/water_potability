@@ -3,6 +3,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import yaml
 
+DATA_PATH = os.path.join('data', 'water_potability.csv')
+PARAMS_PATH = 'params.yaml'
+RAW_DATA_PATH = os.path.join('data', 'raw')
+
 def load_data(path: str) -> pd.DataFrame:
     try:
         return pd.read_csv(path)
@@ -31,9 +35,6 @@ def save_data(df: pd.DataFrame, path: str) -> None:
         raise Exception(f"Error saving data to {path}: {e}")
 
 def main():
-    DATA_PATH = os.path.join('data', 'water_potability.csv')
-    PARAMS_PATH = 'params.yaml'
-    RAW_DATA_PATH = os.path.join('data', 'raw')
 
     try:
         df = load_data(DATA_PATH)

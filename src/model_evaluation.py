@@ -1,14 +1,27 @@
+from dvclive import Live
 import json
 import os
 import pandas as pd
 import pickle
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import yaml
+
+PARAMS_PATH = 'params.yaml'
 
 def load_data(path: str) -> pd.DataFrame:
     try:
         return pd.read_csv(path)
     except Exception as e:
         raise Exception(f"Error loading data from {path}: {e}")
+
+def load_params(path: str) -> float:
+    try:
+        with open(path, 'r') as f:
+            params = yaml.safe_load(f)
+        
+        return params
+    except Exception as e:
+        raise Exception(f"Error loading paramters from {path}: {e}")
 
 def split_X_y(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     try:
@@ -30,12 +43,25 @@ def load_model(path: str):
 
 def test_model(model, X_test: pd.DataFrame, y_test: pd.Series) -> dict:
     try:
+        params = load_params(PARAMS_PATH)
+        test_size = params['data_collection']['test_size']
+        n_estimators = params['model_building']['n_estimators']
+
         y_hat = model.predict(X_test)
 
         accuracy = accuracy_score(y_test, y_hat)
         precision = precision_score(y_test, y_hat)
         recall = recall_score(y_test, y_hat)
         f1 = f1_score(y_test, y_hat)
+
+        with Live(save_dvc_exp=True) as live:
+            live.log_metric('accuracy', accuracy)
+            live.log_metric('precision', precision)
+            live.log_metric('recall', recall)
+            live.log_metric('f1', f1)
+
+            live.log_param('test_size', test_size)
+            live.log_param('n_estimators', n_estimators)
 
         metrics = {
             'accuracy': accuracy,

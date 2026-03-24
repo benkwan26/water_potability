@@ -4,6 +4,10 @@ import pickle
 from sklearn.ensemble import RandomForestClassifier
 import yaml
 
+PROCESSED_DATA_PATH = os.path.join('data', 'processed', 'train_processed.csv')
+PARAMS_PATH = 'params.yaml'
+MODEL_PATH = 'model.pkl'
+
 def load_data(path: str) -> pd.DataFrame:
     try:
         return pd.read_csv(path)
@@ -44,10 +48,6 @@ def save_model(model: RandomForestClassifier, path: str) -> None:
         raise Exception(f"Error saving model to {path}: {e}")
 
 def main():
-    PROCESSED_DATA_PATH = os.path.join('data', 'processed', 'train_processed.csv')
-    PARAMS_PATH = 'params.yaml'
-    MODEL_PATH = 'model.pkl'
-
     try:
         train_df = load_data(PROCESSED_DATA_PATH)
 

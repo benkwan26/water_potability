@@ -1,6 +1,9 @@
 import os
 import pandas as pd
 
+RAW_DATA_PATH = os.path.join('data', 'raw')
+PROCESSED_DATA_PATH = os.path.join('data', 'processed')
+
 def load_data(path: str) -> pd.DataFrame:
     try:
         return pd.read_csv(path)
@@ -24,8 +27,6 @@ def save_data(df: pd.DataFrame, path: str) -> None:
         raise Exception(f"Error saving data to {path}: {e}")
 
 def main():
-    RAW_DATA_PATH = os.path.join('data', 'raw')
-    PROCESSED_DATA_PATH = os.path.join('data', 'processed')
 
     try:
         train_df = load_data(os.path.join(RAW_DATA_PATH, 'train.csv'))
